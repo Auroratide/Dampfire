@@ -1,0 +1,27 @@
+{
+  "name": "dampfire",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve -l 3000 public",
+    "start:watch": "npm run build && npm-run-all --parallel 'build -- --watch' start",
+    "build": "webpack",
+    "clean": "rm -rf public",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "@types/pixi.js": "^5.0.0",
+    "pixi.js": "^5.2.0",
+    "serve": "^11.2.0"
+  }
+}
