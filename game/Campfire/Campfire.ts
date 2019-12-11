@@ -1,7 +1,8 @@
 import * as PIXI from 'pixi.js'
+import { Resources } from '../aliases.js'
 
 export default class Campfire extends PIXI.Sprite {
-  constructor(app: PIXI.Application) {
-    super(app.loader.resources['assets/campfire.png'].texture)
+  constructor(resources: Resources) {
+    super(resources['assets/campfire.png'].texture)
   }
 }

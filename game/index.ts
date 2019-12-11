@@ -8,4 +8,4 @@ document.body.appendChild(app.view)
 
 app.loader
   .add('assets/campfire.png')
-  .load(setup(app))
+  .load(setup(app.stage))
