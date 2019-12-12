@@ -9,4 +9,5 @@ document.body.appendChild(app.view)
 app.loader
   .add('assets/campfire.png')
   .add('assets/ground.png')
-  .load(setup(app.stage, app.renderer))
+  .add('assets/bucket.png')
+  .load(setup(app.stage, app.renderer, app.ticker))
