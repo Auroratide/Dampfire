@@ -10,6 +10,9 @@ export default class TargetObject implements MovementBehaviour {
   }
 
   move(obj: PIXI.DisplayObject) {
-    obj.x += 0.01
+    const dx = this.target.x - obj.x
+    const dy = this.target.y - obj.y
+    const s = this.speed / Math.sqrt(dx * dx + dy * dy)
+    obj.position.set(obj.x + dx * s, obj.y + dy * s)
   }
 }
