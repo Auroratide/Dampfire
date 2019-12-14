@@ -11,4 +11,5 @@ app.loader
   .add('assets/ground.png')
   .add('assets/bucket.png')
   .add('assets/logs.png')
+  .add('assets/plank.png')
   .load(setup(app.stage, app.renderer, app.ticker))
