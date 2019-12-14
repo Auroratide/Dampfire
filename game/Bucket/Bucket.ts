@@ -17,6 +17,9 @@ export default class Bucket extends PIXI.Sprite {
     this.health = health
 
     this.anchor.set(0.5)
+
+    this.interactive = true
+    this.on('mouseup', this.onTap).on('touchend', this.onTap)
     this.ticker.add(this.update)
   }
 
@@ -28,6 +31,10 @@ export default class Bucket extends PIXI.Sprite {
     }
 
     this.movement.move(this)
+  }
+
+  onTap = () => {
+    this.destroy()
   }
 
   destroy() {
