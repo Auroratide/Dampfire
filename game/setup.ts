@@ -4,7 +4,7 @@ import Positioning from './tools/Positioning'
 import Campfire from './Campfire'
 import Light from './Light'
 import Ground from './Ground'
-import Spawner from './Spawner'
+import Wave from './waves/Wave'
 import Health from './domain/Health'
 
 export default (stage: PIXI.Container, renderer: PIXI.Renderer, ticker: PIXI.Ticker) => (loader: PIXI.Loader, resources: Resources) => {
@@ -15,17 +15,17 @@ export default (stage: PIXI.Container, renderer: PIXI.Renderer, ticker: PIXI.Tic
   const campfire = new Campfire(resources, ticker, health)
   const light = new Light(renderer, ticker, health)
 
-  const spawner = new Spawner(ticker, resources, campfire, health, positioning)
+  const wave = new Wave(ticker, resources, campfire, health, positioning)
 
   positioning.center(campfire)
   positioning.center(light)
 
   stage.addChild(ground)
   stage.addChild(campfire)
-  stage.addChild(spawner)
+  stage.addChild(wave)
   stage.addChild(light)
 
   stage.mask = light
 
-  spawner.start()
+  wave.start()
 }

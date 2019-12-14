@@ -1,0 +1,1 @@
+export default (seconds: number) => seconds * 60
