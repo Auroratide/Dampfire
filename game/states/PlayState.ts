@@ -1,13 +1,14 @@
 import * as PIXI from 'pixi.js'
-import { Resources } from './aliases'
-import Positioning from './tools/Positioning'
-import Campfire from './Campfire'
-import Light from './Light'
-import Ground from './Ground'
-import Wave from './waves/Wave'
-import Health from './domain/Health'
+import { Resources } from '../aliases'
+import Positioning from '../tools/Positioning'
+import Campfire from '../Campfire'
+import Light from '../Light'
+import Ground from '../Ground'
+import Wave from '../waves/Wave'
+import Health from '../domain/Health'
+import State from './State'
 
-export default class PlayState extends PIXI.Container {
+export default class PlayState extends PIXI.Container implements State {
   private renderer: PIXI.Renderer
   private ticker: PIXI.Ticker
   private resources: Resources
@@ -40,5 +41,9 @@ export default class PlayState extends PIXI.Container {
     this.mask = light
 
     wave.start()
+  }
+
+  stop = () => {
+    
   }
 }

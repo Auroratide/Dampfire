@@ -1,23 +1,27 @@
 import * as PIXI from 'pixi.js'
-import { Resources } from './aliases'
-import Positioning from './tools/Positioning'
-import Campfire from './Campfire'
-import Light from './Light'
-import Ground from './Ground'
-import Health from './domain/Health'
-import PlainText from './PlainText'
-import PlankButton from './PlankButton'
+import { Resources } from '../aliases'
+import Positioning from '../tools/Positioning'
+import Campfire from '../Campfire'
+import Light from '../Light'
+import Ground from '../Ground'
+import Health from '../domain/Health'
+import PlainText from '../PlainText'
+import PlankButton from '../PlankButton'
+import State from './State'
+import StateManager from './StateManager'
 
-export default class MenuState extends PIXI.Container {
+export default class MenuState extends PIXI.Container implements State {
   private renderer: PIXI.Renderer
   private ticker: PIXI.Ticker
   private resources: Resources
-  constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, resources: Resources) {
+  private stateManager: StateManager
+  constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, resources: Resources, stateManager: StateManager) {
     super()
 
     this.renderer = renderer
     this.ticker = ticker
     this.resources = resources
+    this.stateManager = stateManager
   }
 
   start = () => {
@@ -25,6 +29,10 @@ export default class MenuState extends PIXI.Container {
     
     this.background(positioning)
     this.text(positioning)
+  }
+
+  stop = () => {
+    this.removeChildren().forEach(child => child.destroy())
   }
 
   private background = (positioning: Positioning) => {
@@ -46,7 +54,7 @@ export default class MenuState extends PIXI.Container {
     positioning.y(text, 100)
     
     const playButton = new PlankButton('Play!', this.resources, () => {
-      console.log('Play pressed')
+      this.stateManager.transitionTo('play')
     })
     positioning.centerX(playButton)
     positioning.y(playButton, 250)
