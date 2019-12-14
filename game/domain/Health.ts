@@ -6,6 +6,6 @@ export default class Health {
     this.current = current
   }
 
-  damage = (amount: number) => this.current -= amount
+  damage = (percent: number) => this.current -= percent * this.max
   ratio = () => this.current / this.max
 }
