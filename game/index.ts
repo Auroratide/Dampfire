@@ -10,4 +10,5 @@ app.loader
   .add('assets/campfire.png')
   .add('assets/ground.png')
   .add('assets/bucket.png')
+  .add('assets/logs.png')
   .load(setup(app.stage, app.renderer, app.ticker))

@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js'
 import { Resources } from '../aliases'
 import Bucket from '../Bucket'
+import Logs from '../Logs'
 import TargetObject from '../movement/TargetObject'
 import Campfire from '../Campfire'
 import Health from '../domain/Health'
@@ -17,6 +18,7 @@ export default class Wave extends PIXI.Container {
 
   private slowSpawner: Spawner
   private fastSpawner: Spawner
+  private logSpawner: Spawner
   constructor(ticker: PIXI.Ticker, resources: Resources, campfire: Campfire, health: Health, positioning: Positioning) {
     super()
     this.ticker = ticker
@@ -34,6 +36,11 @@ export default class Wave extends PIXI.Container {
       .startingAt(sec(15)).endingAt(sec(30))
       .every(sec(0.75), sec(1.25))
       .spawn(this.makeBucket)
+    
+    this.logSpawner = new Spawner()
+      .startingAt(sec(15)).endingAt(sec(30))
+      .every(sec(1.5), sec(2.5))
+      .spawn(this.makeLog)
   }
 
   start = () => this.ticker.add(this.loop)
@@ -42,11 +49,18 @@ export default class Wave extends PIXI.Container {
   private loop = (dt: number) => {
     this.slowSpawner.update(dt)
     this.fastSpawner.update(dt)
+    this.logSpawner.update(dt)
   }
 
   makeBucket = () => {
     const bucket = new Bucket(this.resources, this.ticker, new TargetObject(1, this.campfire), this.campfire, this.health)
     this.positioning.randomOffScreen(bucket)
     this.addChild(bucket)
+  }
+
+  makeLog = () => {
+    const logs = new Logs(this.resources, this.ticker, new TargetObject(1, this.campfire), this.campfire, this.health)
+    this.positioning.randomOffScreen(logs)
+    this.addChild(logs)
   }
 }
