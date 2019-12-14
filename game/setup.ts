@@ -15,7 +15,7 @@ export default (stage: PIXI.Container, renderer: PIXI.Renderer, ticker: PIXI.Tic
   const campfire = new Campfire(resources)
   const light = new Light(renderer, ticker, health)
 
-  const spawner = new Spawner(ticker, resources, campfire, health)
+  const spawner = new Spawner(ticker, resources, campfire, health, positioning)
 
   positioning.center(campfire)
   positioning.center(light)
