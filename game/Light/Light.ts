@@ -3,12 +3,19 @@ import Health from '../domain/Health'
 
 export default class Light extends PIXI.Sprite {
   private health: Health
+  private ticker: PIXI.Ticker
   constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, health: Health) {
     super(Light.gradient(renderer.width, renderer.height))
     this.health = health
+    this.ticker = ticker
 
     this.anchor.set(0.5)
     ticker.add(this.adjustLightLevel)
+  }
+
+  destroy() {
+    this.ticker.remove(this.adjustLightLevel)
+    super.destroy()
   }
 
   private adjustLightLevel = () => {

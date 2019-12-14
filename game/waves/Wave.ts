@@ -46,6 +46,11 @@ export default class Wave extends PIXI.Container {
   start = () => this.ticker.add(this.loop)
   stop = () => this.ticker.remove(this.loop)
 
+  destroy() {
+    this.stop()
+    super.destroy({ children: true })
+  }
+
   private loop = (dt: number) => {
     this.slowSpawner.update(dt)
     this.fastSpawner.update(dt)
