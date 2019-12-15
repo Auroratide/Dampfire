@@ -6,8 +6,10 @@ import Light from '../Light'
 import Ground from '../Ground'
 import Wave from '../waves/Wave'
 import Health from '../domain/Health'
+import Score from '../domain/Score'
 import State from './State'
 import StateManager from './StateManager'
+import PlainText from '../PlainText'
 
 export default class PlayState extends PIXI.Container implements State {
   private renderer: PIXI.Renderer
@@ -16,6 +18,8 @@ export default class PlayState extends PIXI.Container implements State {
   private stateManager: StateManager
 
   private health: Health
+  private score: Score
+  private scoreText: PlainText
   constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, resources: Resources, stateManager: StateManager) {
     super()
 
@@ -26,31 +30,45 @@ export default class PlayState extends PIXI.Container implements State {
   }
 
   start = () => {
+    const gameLayer = new PIXI.Container()
+    const uiLayer = new PIXI.Container()
+
     const positioning = new Positioning(this.renderer)
     this.health = new Health(100, 100)
+    this.score = new Score(this.health, 0)
+    this.scoreText = new PlainText(this.score.value().toString(), 24, 'right')
+    this.scoreText.anchor.set(1, 0)
+    positioning.topRight(this.scoreText, 8)
 
     const ground = new Ground(this.resources, this.renderer)
     const campfire = new Campfire(this.resources, this.ticker, this.health)
     const light = new Light(this.renderer, this.ticker, this.health)
 
-    const wave = new Wave(this.ticker, this.resources, campfire, this.health, positioning)
+    const wave = new Wave(this.ticker, this.resources, campfire, this.health, positioning, this.score)
 
     positioning.center(campfire)
     positioning.center(light)
 
-    this.addChild(ground)
-    this.addChild(campfire)
-    this.addChild(wave)
-    this.addChild(light)
+    gameLayer.addChild(ground)
+    gameLayer.addChild(campfire)
+    gameLayer.addChild(wave)
+    gameLayer.addChild(light)
 
-    this.mask = light
+    gameLayer.mask = light
 
+    uiLayer.addChild(this.scoreText)
+
+    this.addChild(gameLayer)
+    this.addChild(uiLayer)
+
+    this.ticker.add(this.updateScore)
     this.ticker.add(this.checkForGameOver)
     wave.start()
   }
 
   stop = () => {
     this.mask = null
+    this.ticker.remove(this.updateScore)
     this.ticker.remove(this.checkForGameOver)
     this.removeChildren().forEach(child => child.destroy())
   }
@@ -59,5 +77,9 @@ export default class PlayState extends PIXI.Container implements State {
     if(this.health.isDead()) {
       this.stateManager.transitionTo('game over')
     }
+  }
+
+  updateScore = () => {
+    this.scoreText.text = this.score.value().toString()
   }
 }

@@ -18,6 +18,10 @@ export default class Positioning {
     obj.position.set(this.renderer.width / 2, this.renderer.height / 2)
   }
 
+  topRight = (obj: PIXI.DisplayObject, padding: number = 0) => {
+    obj.position.set(this.renderer.width - padding, 0)
+  }
+
   randomOffScreen = (obj: PIXI.DisplayObject) => {
     const angle = Math.random() * Math.PI * 2
     const distance = Math.max(this.renderer.width, this.renderer.height) * 0.70914 // sqrt(2) / 2
