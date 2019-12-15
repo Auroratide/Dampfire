@@ -2,28 +2,36 @@ import * as PIXI from 'pixi.js'
 import { Resources } from '../aliases.js'
 import Health from '../domain/Health.js'
 
-export default class Campfire extends PIXI.Sprite {
+export default class Campfire extends PIXI.AnimatedSprite {
   private ticker: PIXI.Ticker
   private health: Health
   constructor(resources: Resources, ticker: PIXI.Ticker, health: Health) {
-    super(resources['assets/campfire.png'].texture)
+    super([
+      resources['assets/campfire/frame-001.png'].texture,
+      resources['assets/campfire/frame-002.png'].texture,
+      resources['assets/campfire/frame-003.png'].texture,
+      resources['assets/campfire/frame-004.png'].texture
+    ])
+    this.animationSpeed = 0.043
     this.ticker = ticker
     this.health = health
 
     this.anchor.set(0.5)
-    this.ticker.add(this.update)
+    this.ticker.add(this.myUpdate)
+
+    this.play()
   }
 
   isCollidingWith = (other: PIXI.DisplayObject): boolean => {
     return this.getBounds().contains(other.x, other.y)
   }
 
-  update = (dt: number) => {
+  myUpdate = (dt: number) => {
     this.health.damage(0.000166 * dt)
   }
 
   destroy() {
-    this.ticker.remove(this.update)
+    this.ticker.remove(this.myUpdate)
     super.destroy()
   }
 }
