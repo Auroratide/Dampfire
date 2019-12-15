@@ -42,5 +42,7 @@ export default class Spawner {
     }
   }
 
+  isDone = () => this.totalFrames >= this.end
+
   getNextSpawnTime = () => Math.random() * (this.interval.max - this.interval.min) + this.interval.min
 }

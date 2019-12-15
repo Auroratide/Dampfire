@@ -20,6 +20,18 @@ export default class WaveFactory {
           .every(sec(1.5), sec(2.5))
           .spawn(this.waveEntities.makeBucket)
       ])
+
+      case 2: return new Wave(this.ticker, [
+        new Spawner()
+          .startingAt(sec(0)).endingAt(sec(20))
+          .every(sec(1), sec(2))
+          .spawn(this.waveEntities.makeBucket),
+        new Spawner()
+          .startingAt(sec(0)).endingAt(sec(20))
+          .every(sec(2.5), sec(3.5))
+          .spawn(this.waveEntities.makeLog)
+      ])
+
       default: throw 'BAD WAVE NUMBER?'
     }
   }

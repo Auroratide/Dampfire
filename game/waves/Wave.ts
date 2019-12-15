@@ -12,6 +12,8 @@ export default class Wave {
   start = () => this.ticker.add(this.loop)
   stop = () => this.ticker.remove(this.loop)
 
+  isDone = () => this.spawners.every(spawner => spawner.isDone())
+
   private loop = (dt: number) => {
     this.spawners.forEach(spawner => spawner.update(dt))
   }

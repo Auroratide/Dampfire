@@ -25,6 +25,7 @@ export default class PlayState extends PIXI.Container implements State {
   private health: Health
   private score: Score
   private scoreText: PlainText
+  private waveDriver: WaveDriver
   constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, resources: Resources, stateManager: StateManager, save: Save) {
     super()
 
@@ -52,7 +53,7 @@ export default class PlayState extends PIXI.Container implements State {
 
     const waveEntities = new WaveEntities(this.ticker, this.resources, campfire, this.health, positioning, this.score)
     const waveFactory = new WaveFactory(this.ticker, waveEntities)
-    const waveDriver = new WaveDriver(waveFactory)
+    this.waveDriver = new WaveDriver(this.ticker, waveFactory)
 
     positioning.center(campfire)
     positioning.center(light)
@@ -71,11 +72,13 @@ export default class PlayState extends PIXI.Container implements State {
 
     this.ticker.add(this.updateScore)
     this.ticker.add(this.checkForGameOver)
-    waveDriver.start()
+    
+    this.waveDriver.start()
   }
 
   stop = () => {
     this.mask = null
+    this.waveDriver.stop()
     this.ticker.remove(this.updateScore)
     this.ticker.remove(this.checkForGameOver)
     this.removeChildren().forEach(child => child.destroy())
