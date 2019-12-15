@@ -4,13 +4,14 @@ import MovementBehaviour from '../movement/MovementBehaviour'
 import Campfire from '../Campfire'
 import Health from '../domain/Health'
 
-export default class Logs extends PIXI.Sprite {
+export default class Logs extends PIXI.AnimatedSprite {
   private ticker: PIXI.Ticker
   private movement: MovementBehaviour
   private campfire: Campfire
   private health: Health
   constructor(resources: Resources, ticker: PIXI.Ticker, movement: MovementBehaviour, campfire: Campfire, health: Health) {
-    super(resources['assets/logs.png'].texture)
+    super([resources['assets/logs/frame-001.png'].texture, resources['assets/logs/frame-002.png'].texture])
+    this.animationSpeed = 0.043
     this.ticker = ticker
     this.movement = movement
     this.campfire = campfire
@@ -20,10 +21,12 @@ export default class Logs extends PIXI.Sprite {
 
     this.interactive = true
     this.on('mouseup', this.onTap).on('touchend', this.onTap)
-    this.ticker.add(this.update)
+    this.ticker.add(this.myUpdate)
+
+    this.play()
   }
 
-  update = () => {
+  myUpdate = () => {
     if(this.campfire.isCollidingWith(this)) {
       this.health.heal(0.1)
       this.destroy()
@@ -38,7 +41,7 @@ export default class Logs extends PIXI.Sprite {
   }
 
   destroy() {
-    this.ticker.remove(this.update)
+    this.ticker.remove(this.myUpdate)
     super.destroy()
   }
 }
