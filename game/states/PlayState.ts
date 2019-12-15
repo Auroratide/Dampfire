@@ -5,6 +5,9 @@ import Campfire from '../Campfire'
 import Light from '../Light'
 import Ground from '../Ground'
 import Wave from '../waves/Wave'
+import WaveEntities from '../waves/WaveEntities'
+import WaveDriver from '../waves/WaveDriver'
+import WaveFactory from '../waves/WaveFactory'
 import Health from '../domain/Health'
 import Score from '../domain/Score'
 import State from './State'
@@ -47,14 +50,16 @@ export default class PlayState extends PIXI.Container implements State {
     const campfire = new Campfire(this.resources, this.ticker, this.health)
     const light = new Light(this.renderer, this.ticker, this.health)
 
-    const wave = new Wave(this.ticker, this.resources, campfire, this.health, positioning, this.score)
+    const waveEntities = new WaveEntities(this.ticker, this.resources, campfire, this.health, positioning, this.score)
+    const waveFactory = new WaveFactory(this.ticker, waveEntities)
+    const waveDriver = new WaveDriver(waveFactory)
 
     positioning.center(campfire)
     positioning.center(light)
 
     gameLayer.addChild(ground)
     gameLayer.addChild(campfire)
-    gameLayer.addChild(wave)
+    gameLayer.addChild(waveEntities)
     gameLayer.addChild(light)
 
     gameLayer.mask = light
@@ -66,7 +71,7 @@ export default class PlayState extends PIXI.Container implements State {
 
     this.ticker.add(this.updateScore)
     this.ticker.add(this.checkForGameOver)
-    wave.start()
+    waveDriver.start()
   }
 
   stop = () => {
