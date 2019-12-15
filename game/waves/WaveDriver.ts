@@ -2,16 +2,19 @@ import * as PIXI from 'pixi.js'
 import WaveFactory from "./WaveFactory";
 import Wave from './Wave'
 import Tutorial from '../tutorial/Tutorial'
+import WaveEntities from './WaveEntities';
 
 export default class WaveDriver {
   private ticker: PIXI.Ticker
   private waveFactory: WaveFactory
+  private waveEntitites: WaveEntities
   private tutorial: Tutorial
   private currentWave: Wave
   private currentWaveNumber: number = 1
-  constructor(ticker: PIXI.Ticker, waveFactory: WaveFactory, tutorial: Tutorial) {
+  constructor(ticker: PIXI.Ticker, waveFactory: WaveFactory, waveEntities: WaveEntities, tutorial: Tutorial) {
     this.ticker = ticker
     this.waveFactory = waveFactory
+    this.waveEntitites = waveEntities
     this.tutorial = tutorial
   }
 
@@ -27,7 +30,7 @@ export default class WaveDriver {
   }
   
   private loop = () => {
-    if(this.currentWave.isDone()) {
+    if(this.currentWave.isDone() && this.waveEntitites.isEmpty()) {
       this.advanceWave()
     }
   }

@@ -25,6 +25,8 @@ export default class WaveEntities extends PIXI.Container {
     this.score = score
   }
 
+  isEmpty = () => this.children.length === 0
+
   clear = () => {
     this.removeChildren().forEach(child => child.destroy())
   }

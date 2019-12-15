@@ -55,7 +55,7 @@ export default class PlayState extends PIXI.Container implements State {
     const tutorial = new Tutorial(this.save, this.resources, this.ticker, positioning, campfire)
     const waveEntities = new WaveEntities(this.ticker, this.resources, campfire, this.health, positioning, this.score)
     const waveFactory = new WaveFactory(this.ticker, waveEntities)
-    this.waveDriver = new WaveDriver(this.ticker, waveFactory, tutorial)
+    this.waveDriver = new WaveDriver(this.ticker, waveFactory, waveEntities, tutorial)
 
     positioning.center(campfire)
     positioning.center(light)
