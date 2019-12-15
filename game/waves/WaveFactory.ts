@@ -32,7 +32,16 @@ export default class WaveFactory {
           .spawn(this.waveEntities.makeLog)
       ])
 
-      default: throw 'BAD WAVE NUMBER?'
+      default: return new Wave(this.ticker, [
+        new Spawner()
+          .startingAt(sec(0)).endingAt(sec(30))
+          .every(sec(0.5), sec(1))
+          .spawn(this.waveEntities.makeBucket),
+        new Spawner()
+          .startingAt(sec(0)).endingAt(sec(30))
+          .every(sec(3), sec(5))
+          .spawn(this.waveEntities.makeLog)
+      ])
     }
   }
 }
