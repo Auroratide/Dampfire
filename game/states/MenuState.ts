@@ -9,19 +9,22 @@ import PlainText from '../PlainText'
 import PlankButton from '../PlankButton'
 import State from './State'
 import StateManager from './StateManager'
+import Save from '../domain/Save'
 
 export default class MenuState extends PIXI.Container implements State {
   private renderer: PIXI.Renderer
   private ticker: PIXI.Ticker
   private resources: Resources
   private stateManager: StateManager
-  constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, resources: Resources, stateManager: StateManager) {
+  private save: Save
+  constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, resources: Resources, stateManager: StateManager, save: Save) {
     super()
 
     this.renderer = renderer
     this.ticker = ticker
     this.resources = resources
     this.stateManager = stateManager
+    this.save = save
   }
 
   start = () => {
@@ -56,6 +59,10 @@ export default class MenuState extends PIXI.Container implements State {
     const credits = new PlainText('By Timothy Foster for OMGJam 6\nMusic: "Corncob" by Kevin MacLeod, CC BY', 18)
     credits.anchor.set(0.5, 1)
     positioning.bottomCenter(credits)
+
+    const highscore = new PlainText(`Highscore: ${this.save.highscore.get()}`, 24)
+    positioning.centerX(highscore)
+    positioning.y(highscore, 200)
     
     const playButton = new PlankButton('Play!', this.resources, () => {
       this.stateManager.transitionTo('play')
@@ -64,6 +71,7 @@ export default class MenuState extends PIXI.Container implements State {
     positioning.y(playButton, 250)
 
     this.addChild(title)
+    this.addChild(highscore)
     this.addChild(credits)
     this.addChild(playButton)
   }

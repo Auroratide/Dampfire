@@ -7,19 +7,22 @@ import PlainText from '../PlainText'
 import PlankButton from '../PlankButton'
 import State from './State'
 import StateManager from './StateManager'
+import Save from '../domain/Save'
 
 export default class GameOverState extends PIXI.Container implements State {
   private renderer: PIXI.Renderer
   private ticker: PIXI.Ticker
   private resources: Resources
   private stateManager: StateManager
-  constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, resources: Resources, stateManager: StateManager) {
+  private save: Save
+  constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, resources: Resources, stateManager: StateManager, save: Save) {
     super()
 
     this.renderer = renderer
     this.ticker = ticker
     this.resources = resources
     this.stateManager = stateManager
+    this.save = save
   }
 
   start = () => {
