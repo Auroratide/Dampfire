@@ -18,6 +18,6 @@ export default (stage: PIXI.Container, renderer: PIXI.Renderer, ticker: PIXI.Tic
   stage.addChild(play)
   stage.addChild(gameOver)
 
-  // stateManager.firstState('menu')
-  stateManager.firstState('play')
+  stateManager.firstState('menu')
+  // stateManager.firstState('play')
 }

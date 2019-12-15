@@ -9,6 +9,7 @@ export default class PlainText extends PIXI.Text {
       align : align
     })
 
+    this.resolution = 2
     this.anchor.set(0.5)
   }
 }

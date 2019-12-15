@@ -49,9 +49,13 @@ export default class MenuState extends PIXI.Container implements State {
   }
 
   private text = (positioning: Positioning) => {
-    const text = new PlainText('Dampfire', 48)
-    positioning.centerX(text)
-    positioning.y(text, 100)
+    const title = new PlainText('Dampfire', 48)
+    positioning.centerX(title)
+    positioning.y(title, 100)
+
+    const credits = new PlainText('By Timothy Foster for OMGJam 6\nMusic: "Corncob" by Kevin MacLeod, CC BY', 18)
+    credits.anchor.set(0.5, 1)
+    positioning.bottomCenter(credits)
     
     const playButton = new PlankButton('Play!', this.resources, () => {
       this.stateManager.transitionTo('play')
@@ -59,7 +63,8 @@ export default class MenuState extends PIXI.Container implements State {
     positioning.centerX(playButton)
     positioning.y(playButton, 250)
 
-    this.addChild(text)
+    this.addChild(title)
+    this.addChild(credits)
     this.addChild(playButton)
   }
 }
