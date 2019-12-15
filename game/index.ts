@@ -1,10 +1,19 @@
 import * as PIXI from 'pixi.js'
+import SOUND from 'pixi-sound'
 import config from './config'
 import setup from './setup'
 
 const app = new PIXI.Application(config)
 
 document.body.appendChild(app.view)
+
+console.log(SOUND)
+
+SOUND.Sound.from({
+  url: 'assets/music.mp3',
+  autoPlay: true,
+  loop: true
+});
 
 app.loader
   .add('assets/campfire/frame-001.png')
