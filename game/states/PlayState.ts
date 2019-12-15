@@ -14,6 +14,7 @@ import State from './State'
 import StateManager from './StateManager'
 import PlainText from '../PlainText'
 import Save from '../domain/Save'
+import Tutorial from '../tutorial/Tutorial'
 
 export default class PlayState extends PIXI.Container implements State {
   private renderer: PIXI.Renderer
@@ -51,9 +52,10 @@ export default class PlayState extends PIXI.Container implements State {
     const campfire = new Campfire(this.resources, this.ticker, this.health)
     const light = new Light(this.renderer, this.ticker, this.health)
 
+    const tutorial = new Tutorial(this.save, this.resources, this.ticker, positioning, campfire)
     const waveEntities = new WaveEntities(this.ticker, this.resources, campfire, this.health, positioning, this.score)
     const waveFactory = new WaveFactory(this.ticker, waveEntities)
-    this.waveDriver = new WaveDriver(this.ticker, waveFactory)
+    this.waveDriver = new WaveDriver(this.ticker, waveFactory, tutorial)
 
     positioning.center(campfire)
     positioning.center(light)
@@ -65,7 +67,9 @@ export default class PlayState extends PIXI.Container implements State {
 
     gameLayer.mask = light
 
+
     uiLayer.addChild(this.scoreText)
+    uiLayer.addChild(tutorial)
 
     this.addChild(gameLayer)
     this.addChild(uiLayer)

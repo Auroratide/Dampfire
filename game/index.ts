@@ -18,4 +18,5 @@ app.loader
   .add('assets/logs/frame-002.png')
   .add('assets/logs.png')
   .add('assets/plank.png')
+  .add('assets/plank-large.png')
   .load(setup(app.stage, app.renderer, app.ticker))
