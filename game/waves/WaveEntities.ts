@@ -36,13 +36,8 @@ export default class WaveEntities extends PIXI.Container {
 
   isEmpty = () => this.children.length === 0
 
-  clear = () => {
-    this.removeChildren().forEach(child => child.destroy())
-  }
-
   destroy() {
-    this.clear()
-    super.destroy()
+    super.destroy({ children: true })
   }
 
   makeBucket = () => {

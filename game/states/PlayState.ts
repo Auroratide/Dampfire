@@ -93,7 +93,13 @@ export default class PlayState extends PIXI.Container implements State {
     this.waveDriver.stop()
     this.ticker.remove(this.updateScore)
     this.ticker.remove(this.checkForGameOver)
-    this.removeChildren().forEach(child => child.destroy())
+    this.removeChildren().forEach(child => {
+      if(child instanceof PIXI.Container) {
+        child.destroy({ children: true })
+      } else {
+        child.destroy()
+      }
+    })
   }
 
   checkForGameOver = () => {
