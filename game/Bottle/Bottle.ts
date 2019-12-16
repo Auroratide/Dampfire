@@ -8,7 +8,7 @@ import Explosions from '../Explosions'
 import ScoringLayer from '../ScoringLayer'
 import SoundManager from '../SoundManager'
 
-export default class Bucket extends PIXI.AnimatedSprite {
+export default class Bottle extends PIXI.AnimatedSprite {
   private ticker: PIXI.Ticker
   private movement: MovementBehaviour
   private campfire: Campfire
@@ -18,7 +18,7 @@ export default class Bucket extends PIXI.AnimatedSprite {
   private scoringLayer: ScoringLayer
   private sfx: SoundManager
   constructor(resources: Resources, ticker: PIXI.Ticker, movement: MovementBehaviour, campfire: Campfire, health: Health, score: Score, explosions: Explosions, scoringLayer: ScoringLayer, sfx: SoundManager) {
-    super([resources['assets/bucket/frame-001.png'].texture, resources['assets/bucket/frame-002.png'].texture])
+    super([resources['assets/bottle/frame-001.png'].texture, resources['assets/bottle/frame-002.png'].texture])
     this.animationSpeed = 0.043
     this.ticker = ticker
     this.movement = movement
@@ -38,10 +38,9 @@ export default class Bucket extends PIXI.AnimatedSprite {
     this.play()
   }
 
-  // Cannot be update() because AnimatedSprite defines this function in a non-overridable way
   myUpdate = () => {
     if(this.campfire.isCollidingWith(this)) {
-      this.health.damage(0.15)
+      this.health.damage(0.05)
       this.sfx.steam.play()
       this.destroy()
       return

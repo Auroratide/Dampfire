@@ -27,6 +27,8 @@ app.loader
   .add('assets/bucket/frame-002.png')
   .add('assets/logs/frame-001.png')
   .add('assets/logs/frame-002.png')
+  .add('assets/bottle/frame-001.png')
+  .add('assets/bottle/frame-002.png')
   .add('assets/logs.png')
   .add('assets/plank.png')
   .add('assets/plank-large.png')

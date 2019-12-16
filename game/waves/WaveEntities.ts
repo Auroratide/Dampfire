@@ -5,6 +5,7 @@ import Health from '../domain/Health'
 import Positioning from '../tools/Positioning'
 import Score from '../domain/Score'
 import Bucket from '../Bucket'
+import Bottle from '../Bottle'
 import Logs from '../Logs'
 import TargetObject from '../movement/TargetObject'
 import Explosions from '../Explosions'
@@ -41,14 +42,23 @@ export default class WaveEntities extends PIXI.Container {
   }
 
   makeBucket = () => {
-    const bucket = new Bucket(this.resources, this.ticker, new TargetObject(1, this.campfire), this.campfire, this.health, this.score, this.explosions, this.scoringLayer, this.sfx)
+    const speed = Math.random() * 0.5 + 0.5
+    const bucket = new Bucket(this.resources, this.ticker, new TargetObject(speed, this.campfire), this.campfire, this.health, this.score, this.explosions, this.scoringLayer, this.sfx)
     this.positioning.randomOffScreen(bucket)
     this.addChild(bucket)
   }
 
   makeLog = () => {
-    const logs = new Logs(this.resources, this.ticker, new TargetObject(1, this.campfire), this.campfire, this.health, this.explosions, this.sfx)
+    const speed = Math.random() * 0.5 + 0.667
+    const logs = new Logs(this.resources, this.ticker, new TargetObject(speed, this.campfire), this.campfire, this.health, this.explosions, this.sfx)
     this.positioning.randomOffScreen(logs)
     this.addChild(logs)
+  }
+
+  makeBottle = () => {
+    const speed = Math.random() * 0.5 + 1.25
+    const bottle = new Bottle(this.resources, this.ticker, new TargetObject(speed, this.campfire), this.campfire, this.health, this.score, this.explosions, this.scoringLayer, this.sfx)
+    this.positioning.randomOffScreen(bottle)
+    this.addChild(bottle)
   }
 }

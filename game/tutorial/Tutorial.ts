@@ -36,6 +36,15 @@ export default class Tutorial extends PIXI.Container {
           'To replenish the fire, I should allow wood logs to pass through by not tapping them.',
           'However, I score more points the dimmer my fire is! Do I play it safe, or do I go hardcore?'
         ]).start()
+
+        case 3: return new Sequence(this, [
+          'Oh no! The buckets were too slow, so now they are starting to use water bottles!',
+          'They\'re faster, but I can destroy them the same way I destroy the buckets!'
+        ]).start()
+
+        case 4: return new Sequence(this, [
+          'Now those bullies are gonna throw everything they have at me. Let\'s see how long I can survive!'
+        ]).start()
   
         default: this.complete()
       }
