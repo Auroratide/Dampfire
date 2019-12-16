@@ -23,7 +23,7 @@ export default class Bucket extends PIXI.AnimatedSprite {
     this.anchor.set(0.5)
 
     this.interactive = true
-    this.on('mouseup', this.onTap).on('touchend', this.onTap)
+    this.on('mousedown', this.onTap).on('touchstart', this.onTap)
     this.ticker.add(this.myUpdate)
 
     this.play()
