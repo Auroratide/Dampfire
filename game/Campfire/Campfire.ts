@@ -24,7 +24,8 @@ export default class Campfire extends PIXI.AnimatedSprite {
   }
 
   isCollidingWith = (other: PIXI.DisplayObject): boolean => {
-    return this.getBounds().contains(other.x, other.y)
+    const bounds = this.getBounds()
+    return bounds.pad(-bounds.width / 4, -bounds.height / 4).contains(other.x, other.y)
   }
 
   myUpdate = (dt: number) => {
