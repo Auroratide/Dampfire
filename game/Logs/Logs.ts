@@ -4,6 +4,7 @@ import MovementBehaviour from '../movement/MovementBehaviour'
 import Campfire from '../Campfire'
 import Health from '../domain/Health'
 import Explosions from '../Explosions'
+import SoundManager from '../SoundManager'
 
 export default class Logs extends PIXI.AnimatedSprite {
   private ticker: PIXI.Ticker
@@ -11,7 +12,8 @@ export default class Logs extends PIXI.AnimatedSprite {
   private campfire: Campfire
   private health: Health
   private explosions: Explosions
-  constructor(resources: Resources, ticker: PIXI.Ticker, movement: MovementBehaviour, campfire: Campfire, health: Health, explosions: Explosions) {
+  private sfx: SoundManager
+  constructor(resources: Resources, ticker: PIXI.Ticker, movement: MovementBehaviour, campfire: Campfire, health: Health, explosions: Explosions, sfx: SoundManager) {
     super([resources['assets/logs/frame-001.png'].texture, resources['assets/logs/frame-002.png'].texture])
     this.animationSpeed = 0.043
     this.ticker = ticker
@@ -19,6 +21,7 @@ export default class Logs extends PIXI.AnimatedSprite {
     this.campfire = campfire
     this.health = health
     this.explosions = explosions
+    this.sfx = sfx
 
     this.anchor.set(0.5)
 
@@ -32,6 +35,7 @@ export default class Logs extends PIXI.AnimatedSprite {
   myUpdate = () => {
     if(this.campfire.isCollidingWith(this)) {
       this.health.heal(0.1)
+      this.sfx.flame.play()
       this.destroy()
       return
     }
@@ -41,6 +45,7 @@ export default class Logs extends PIXI.AnimatedSprite {
 
   onTap = () => {
     this.explosions.make(this)
+    this.sfx.flame.play()
     this.destroy()
   }
 

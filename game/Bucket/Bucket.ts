@@ -6,6 +6,7 @@ import Health from '../domain/Health'
 import Score from '../domain/Score'
 import Explosions from '../Explosions'
 import ScoringLayer from '../ScoringLayer'
+import SoundManager from '../SoundManager'
 
 export default class Bucket extends PIXI.AnimatedSprite {
   private ticker: PIXI.Ticker
@@ -15,7 +16,8 @@ export default class Bucket extends PIXI.AnimatedSprite {
   private score: Score
   private explosions: Explosions
   private scoringLayer: ScoringLayer
-  constructor(resources: Resources, ticker: PIXI.Ticker, movement: MovementBehaviour, campfire: Campfire, health: Health, score: Score, explosions: Explosions, scoringLayer: ScoringLayer) {
+  private sfx: SoundManager
+  constructor(resources: Resources, ticker: PIXI.Ticker, movement: MovementBehaviour, campfire: Campfire, health: Health, score: Score, explosions: Explosions, scoringLayer: ScoringLayer, sfx: SoundManager) {
     super([resources['assets/bucket/frame-001.png'].texture, resources['assets/bucket/frame-002.png'].texture])
     this.animationSpeed = 0.043
     this.ticker = ticker
@@ -25,6 +27,7 @@ export default class Bucket extends PIXI.AnimatedSprite {
     this.score = score
     this.explosions = explosions
     this.scoringLayer = scoringLayer
+    this.sfx = sfx
 
     this.anchor.set(0.5)
 
@@ -39,6 +42,7 @@ export default class Bucket extends PIXI.AnimatedSprite {
   myUpdate = () => {
     if(this.campfire.isCollidingWith(this)) {
       this.health.damage(0.1)
+      this.sfx.steam.play()
       this.destroy()
       return
     }
@@ -49,6 +53,7 @@ export default class Bucket extends PIXI.AnimatedSprite {
   onTap = () => {
     this.scoringLayer.make(this, this.score.add(10))
     this.explosions.make(this)
+    this.sfx.flame.play()
     this.destroy()
   }
 

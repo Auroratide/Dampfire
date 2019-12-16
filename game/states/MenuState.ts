@@ -10,6 +10,7 @@ import PlankButton from '../PlankButton'
 import State from './State'
 import StateManager from './StateManager'
 import Save from '../domain/Save'
+import SoundManager from '../SoundManager'
 
 export default class MenuState extends PIXI.Container implements State {
   private renderer: PIXI.Renderer
@@ -17,7 +18,8 @@ export default class MenuState extends PIXI.Container implements State {
   private resources: Resources
   private stateManager: StateManager
   private save: Save
-  constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, resources: Resources, stateManager: StateManager, save: Save) {
+  private sfx: SoundManager
+  constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, resources: Resources, stateManager: StateManager, save: Save, sfx: SoundManager) {
     super()
 
     this.renderer = renderer
@@ -25,6 +27,7 @@ export default class MenuState extends PIXI.Container implements State {
     this.resources = resources
     this.stateManager = stateManager
     this.save = save
+    this.sfx = sfx
   }
 
   start = () => {
@@ -71,7 +74,7 @@ export default class MenuState extends PIXI.Container implements State {
     positioning.centerX(highscore)
     positioning.y(highscore, 190)
     
-    const playButton = new PlankButton('Play!', this.resources, () => {
+    const playButton = new PlankButton('Play!', this.resources, this.sfx, () => {
       this.stateManager.transitionTo('play')
     })
     positioning.centerX(playButton)

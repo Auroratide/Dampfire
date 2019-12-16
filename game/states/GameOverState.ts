@@ -9,6 +9,7 @@ import State from './State'
 import StateManager from './StateManager'
 import Save from '../domain/Save'
 import Score from '../domain/Score'
+import SoundManager from '../SoundManager'
 
 interface GameOverContext {
   score: Score
@@ -20,7 +21,8 @@ export default class GameOverState extends PIXI.Container implements State {
   private resources: Resources
   private stateManager: StateManager
   private save: Save
-  constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, resources: Resources, stateManager: StateManager, save: Save) {
+  private sfx: SoundManager
+  constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, resources: Resources, stateManager: StateManager, save: Save, sfx: SoundManager) {
     super()
 
     this.renderer = renderer
@@ -28,6 +30,7 @@ export default class GameOverState extends PIXI.Container implements State {
     this.resources = resources
     this.stateManager = stateManager
     this.save = save
+    this.sfx = sfx
   }
 
   start = (context: GameOverContext) => {
@@ -61,13 +64,13 @@ export default class GameOverState extends PIXI.Container implements State {
     positioning.centerX(scoreText)
     positioning.y(scoreText, 180)
     
-    const playButton = new PlankButton('Play Again', this.resources, () => {
+    const playButton = new PlankButton('Play Again', this.resources, this.sfx, () => {
       this.stateManager.transitionTo('play')
     })
     positioning.centerX(playButton)
     positioning.y(playButton, 250)
 
-    const mainMenuButton = new PlankButton('Main Menu', this.resources, () => {
+    const mainMenuButton = new PlankButton('Main Menu', this.resources, this.sfx, () => {
       this.stateManager.transitionTo('menu')
     })
     positioning.centerX(mainMenuButton)

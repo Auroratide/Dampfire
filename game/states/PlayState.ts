@@ -4,7 +4,6 @@ import Positioning from '../tools/Positioning'
 import Campfire from '../Campfire'
 import Light from '../Light'
 import Ground from '../Ground'
-import Wave from '../waves/Wave'
 import WaveEntities from '../waves/WaveEntities'
 import WaveDriver from '../waves/WaveDriver'
 import WaveFactory from '../waves/WaveFactory'
@@ -17,6 +16,7 @@ import Save from '../domain/Save'
 import Tutorial from '../tutorial/Tutorial'
 import Explosions from '../Explosions'
 import ScoringLayer from '../ScoringLayer'
+import SoundManager from '../SoundManager'
 
 export default class PlayState extends PIXI.Container implements State {
   private renderer: PIXI.Renderer
@@ -24,12 +24,13 @@ export default class PlayState extends PIXI.Container implements State {
   private resources: Resources
   private stateManager: StateManager
   private save: Save
+  private sfx: SoundManager
 
   private health: Health
   private score: Score
   private scoreText: PlainText
   private waveDriver: WaveDriver
-  constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, resources: Resources, stateManager: StateManager, save: Save) {
+  constructor(renderer: PIXI.Renderer, ticker: PIXI.Ticker, resources: Resources, stateManager: StateManager, save: Save, sfx: SoundManager) {
     super()
 
     this.renderer = renderer
@@ -37,6 +38,7 @@ export default class PlayState extends PIXI.Container implements State {
     this.resources = resources
     this.stateManager = stateManager
     this.save = save
+    this.sfx = sfx
   }
 
   start = () => {
@@ -57,7 +59,7 @@ export default class PlayState extends PIXI.Container implements State {
     const light = new Light(this.renderer, this.ticker, this.health)
 
     const tutorial = new Tutorial(this.save, this.resources, this.ticker, positioning, campfire)
-    const waveEntities = new WaveEntities(this.ticker, this.resources, campfire, this.health, positioning, this.score, explosions, scoringLayer)
+    const waveEntities = new WaveEntities(this.ticker, this.resources, campfire, this.health, positioning, this.score, explosions, scoringLayer, this.sfx)
     const waveFactory = new WaveFactory(this.ticker, waveEntities)
     this.waveDriver = new WaveDriver(this.ticker, waveFactory, waveEntities, tutorial)
 
@@ -99,6 +101,7 @@ export default class PlayState extends PIXI.Container implements State {
       if(this.score.value() > parseInt(this.save.highscore.get()))
         this.save.highscore.set(this.score.value().toString())
 
+      this.sfx.steam.play()
       this.stateManager.transitionTo('game over', {
         score: this.score
       })

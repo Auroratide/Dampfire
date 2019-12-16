@@ -1,14 +1,17 @@
 import * as PIXI from 'pixi.js'
 import PlainText from '../PlainText'
 import { Resources } from '../aliases'
+import SoundManager from '../SoundManager'
 
 export default class PlankButton extends PIXI.Container {
   private action: () => void
   private plank: PIXI.Sprite
   private text: PlainText
-  constructor(text: string, resources: Resources, action: () => void) {
+  private sfx: SoundManager
+  constructor(text: string, resources: Resources, sfx: SoundManager, action: () => void) {
     super()
     this.action = action
+    this.sfx = sfx
 
     this.plank = new PIXI.Sprite(resources['assets/plank.png'].texture)
     this.plank.anchor.set(0.5)
@@ -44,6 +47,7 @@ export default class PlankButton extends PIXI.Container {
 
   private onPress = () => {
     this.plank.rotation = Math.PI / 27
+    this.sfx.wood.play()
   }
 
   private onRelease = () => {
