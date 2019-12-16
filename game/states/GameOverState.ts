@@ -67,8 +67,15 @@ export default class GameOverState extends PIXI.Container implements State {
     positioning.centerX(playButton)
     positioning.y(playButton, 250)
 
+    const mainMenuButton = new PlankButton('Main Menu', this.resources, () => {
+      this.stateManager.transitionTo('menu')
+    })
+    positioning.centerX(mainMenuButton)
+    positioning.y(mainMenuButton, 300)
+
     this.addChild(text)
     this.addChild(scoreText)
     this.addChild(playButton)
+    this.addChild(mainMenuButton)
   }
 }
