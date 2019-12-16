@@ -7,8 +7,6 @@ const app = new PIXI.Application(config)
 
 document.body.appendChild(app.view)
 
-console.log(SOUND)
-
 SOUND.Sound.from({
   url: 'assets/music.mp3',
   autoPlay: true,
