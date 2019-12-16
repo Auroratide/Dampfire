@@ -7,6 +7,7 @@ import Score from '../domain/Score'
 import Bucket from '../Bucket'
 import Logs from '../Logs'
 import TargetObject from '../movement/TargetObject'
+import Explosions from '../Explosions'
 
 export default class WaveEntities extends PIXI.Container {
   private ticker: PIXI.Ticker
@@ -15,7 +16,8 @@ export default class WaveEntities extends PIXI.Container {
   private health: Health
   private positioning: Positioning
   private score: Score
-  constructor(ticker: PIXI.Ticker, resources: Resources, campfire: Campfire, health: Health, positioning: Positioning, score: Score) {
+  private explosions: Explosions
+  constructor(ticker: PIXI.Ticker, resources: Resources, campfire: Campfire, health: Health, positioning: Positioning, score: Score, explosions: Explosions) {
     super()
     this.ticker = ticker
     this.resources = resources
@@ -23,6 +25,7 @@ export default class WaveEntities extends PIXI.Container {
     this.health = health
     this.positioning = positioning
     this.score = score
+    this.explosions = explosions
   }
 
   isEmpty = () => this.children.length === 0
@@ -37,13 +40,13 @@ export default class WaveEntities extends PIXI.Container {
   }
 
   makeBucket = () => {
-    const bucket = new Bucket(this.resources, this.ticker, new TargetObject(1, this.campfire), this.campfire, this.health, this.score)
+    const bucket = new Bucket(this.resources, this.ticker, new TargetObject(1, this.campfire), this.campfire, this.health, this.score, this.explosions)
     this.positioning.randomOffScreen(bucket)
     this.addChild(bucket)
   }
 
   makeLog = () => {
-    const logs = new Logs(this.resources, this.ticker, new TargetObject(1, this.campfire), this.campfire, this.health)
+    const logs = new Logs(this.resources, this.ticker, new TargetObject(1, this.campfire), this.campfire, this.health, this.explosions)
     this.positioning.randomOffScreen(logs)
     this.addChild(logs)
   }

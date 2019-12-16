@@ -4,6 +4,7 @@ import MovementBehaviour from '../movement/MovementBehaviour'
 import Campfire from '../Campfire'
 import Health from '../domain/Health'
 import Score from '../domain/Score'
+import Explosions from '../Explosions'
 
 export default class Bucket extends PIXI.AnimatedSprite {
   private ticker: PIXI.Ticker
@@ -11,7 +12,8 @@ export default class Bucket extends PIXI.AnimatedSprite {
   private campfire: Campfire
   private health: Health
   private score: Score
-  constructor(resources: Resources, ticker: PIXI.Ticker, movement: MovementBehaviour, campfire: Campfire, health: Health, score: Score) {
+  private explosions: Explosions
+  constructor(resources: Resources, ticker: PIXI.Ticker, movement: MovementBehaviour, campfire: Campfire, health: Health, score: Score, explosions: Explosions) {
     super([resources['assets/bucket/frame-001.png'].texture, resources['assets/bucket/frame-002.png'].texture])
     this.animationSpeed = 0.043
     this.ticker = ticker
@@ -19,6 +21,7 @@ export default class Bucket extends PIXI.AnimatedSprite {
     this.campfire = campfire
     this.health = health
     this.score = score
+    this.explosions = explosions
 
     this.anchor.set(0.5)
 
@@ -42,6 +45,7 @@ export default class Bucket extends PIXI.AnimatedSprite {
 
   onTap = () => {
     this.score.add(10)
+    this.explosions.make(this)
     this.destroy()
   }
 
