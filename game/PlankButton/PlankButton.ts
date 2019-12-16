@@ -25,6 +25,29 @@ export default class PlankButton extends PIXI.Container {
     this.addChild(this.text)
 
     this.interactive = true
-    this.on('mouseup', this.action).on('touchend', this.action)
+    this
+      .on('mousedown', this.onPress)
+      .on('touchstart', this.onPress)
+      .on('mouseover', this.onHover)
+      .on('mouseout', this.offHover)
+      .on('mouseup', this.onRelease)
+      .on('touchend', this.onRelease)
+  }
+
+  private onHover = () => {
+    this.plank.rotation = -Math.PI / 30
+  }
+
+  private offHover = () => {
+    this.plank.rotation = 0
+  }
+
+  private onPress = () => {
+    this.plank.rotation = Math.PI / 27
+  }
+
+  private onRelease = () => {
+    this.plank.rotation = 0
+    this.action()
   }
 }
