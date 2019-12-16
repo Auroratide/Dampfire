@@ -53,7 +53,7 @@ export default class GameOverState extends PIXI.Container implements State {
   }
 
   private text = (positioning: Positioning, score: Score) => {
-    const text = new PlainText('Game over', 48)
+    const text = new PlainText('The fire went out!', 48)
     positioning.centerX(text)
     positioning.y(text, 100)
 
