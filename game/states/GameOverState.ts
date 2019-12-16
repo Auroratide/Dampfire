@@ -8,6 +8,11 @@ import PlankButton from '../PlankButton'
 import State from './State'
 import StateManager from './StateManager'
 import Save from '../domain/Save'
+import Score from '../domain/Score'
+
+interface GameOverContext {
+  score: Score
+}
 
 export default class GameOverState extends PIXI.Container implements State {
   private renderer: PIXI.Renderer
@@ -25,11 +30,11 @@ export default class GameOverState extends PIXI.Container implements State {
     this.save = save
   }
 
-  start = () => {
+  start = (context: GameOverContext) => {
     const positioning = new Positioning(this.renderer)
     
     this.background(positioning)
-    this.text(positioning)
+    this.text(positioning, context.score)
   }
 
   stop = () => {
@@ -47,10 +52,14 @@ export default class GameOverState extends PIXI.Container implements State {
     this.addChild(background)
   }
 
-  private text = (positioning: Positioning) => {
+  private text = (positioning: Positioning, score: Score) => {
     const text = new PlainText('Game over', 48)
     positioning.centerX(text)
     positioning.y(text, 100)
+
+    const scoreText = new PlainText(`Score: ${score.value()}`, 22)
+    positioning.centerX(scoreText)
+    positioning.y(scoreText, 200)
     
     const playButton = new PlankButton('Play Again', this.resources, () => {
       this.stateManager.transitionTo('play')
@@ -59,6 +68,7 @@ export default class GameOverState extends PIXI.Container implements State {
     positioning.y(playButton, 250)
 
     this.addChild(text)
+    this.addChild(scoreText)
     this.addChild(playButton)
   }
 }

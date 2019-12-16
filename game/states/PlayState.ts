@@ -93,7 +93,9 @@ export default class PlayState extends PIXI.Container implements State {
       if(this.score.value() > parseInt(this.save.highscore.get()))
         this.save.highscore.set(this.score.value().toString())
 
-      this.stateManager.transitionTo('game over')
+      this.stateManager.transitionTo('game over', {
+        score: this.score
+      })
     }
   }
 

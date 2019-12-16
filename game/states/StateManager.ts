@@ -9,14 +9,14 @@ export default class StateManager {
     this.states[name] = state
   }
 
-  firstState = (state: string) => {
+  firstState = (state: string, context: any = {}) => {
     this.currentState = state
-    this.states[this.currentState].start()
+    this.states[this.currentState].start(context)
   }
 
-  transitionTo = (state: string) => {
+  transitionTo = (state: string, context: any = {}) => {
     this.states[this.currentState].stop()
     this.currentState = state
-    this.states[this.currentState].start()
+    this.states[this.currentState].start(context)
   }
 }

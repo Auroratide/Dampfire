@@ -1,4 +1,4 @@
 export default interface State {
-  start: () => void
+  start: (context: any) => void
   stop: () => void
 }
