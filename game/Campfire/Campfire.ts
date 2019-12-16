@@ -29,7 +29,7 @@ export default class Campfire extends PIXI.AnimatedSprite {
 
   myUpdate = (dt: number) => {
     if(this.dimming)
-      this.health.damage(0.000166 * dt)
+      this.health.damage(0.000249 * dt)
   }
 
   destroy() {
