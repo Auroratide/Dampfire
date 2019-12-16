@@ -5,8 +5,6 @@ import PlayState from './states/PlayState'
 import MenuState from './states/MenuState'
 import GameOverState from './states/GameOverState'
 import Save from './domain/Save'
-import Score from './domain/Score'
-import Health from './domain/Health'
 
 export default (stage: PIXI.Container, renderer: PIXI.Renderer, ticker: PIXI.Ticker) => (loader: PIXI.Loader, resources: Resources) => {
   const save = new Save(window.localStorage)
@@ -24,5 +22,5 @@ export default (stage: PIXI.Container, renderer: PIXI.Renderer, ticker: PIXI.Tic
   stage.addChild(gameOver)
 
   // stateManager.firstState('menu')
-  stateManager.firstState('game over', { score: new Score(new Health(100, 100), 124) })
+  stateManager.firstState('menu')
 }

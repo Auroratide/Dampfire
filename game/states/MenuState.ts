@@ -40,11 +40,18 @@ export default class MenuState extends PIXI.Container implements State {
 
   private background = (positioning: Positioning) => {
     const health = new Health(100, 66)
+    const campfire = new Campfire(this.resources, this.ticker, health)
+    campfire.pauseDimming()
+    positioning.centerX(campfire)
+    positioning.y(campfire, 350)
+
     const background = new PIXI.Container()
     const ground = new Ground(this.resources, this.renderer)
     const light = new Light(this.renderer, this.ticker, health)
-    positioning.center(light)
+    positioning.centerX(light)
+    positioning.y(light, 350)
     background.addChild(ground)
+    background.addChild(campfire)
     background.addChild(light)
     background.mask = light
 
@@ -62,7 +69,7 @@ export default class MenuState extends PIXI.Container implements State {
 
     const highscore = new PlainText(`Highscore: ${this.save.highscore.get()}`, 24)
     positioning.centerX(highscore)
-    positioning.y(highscore, 200)
+    positioning.y(highscore, 190)
     
     const playButton = new PlankButton('Play!', this.resources, () => {
       this.stateManager.transitionTo('play')
