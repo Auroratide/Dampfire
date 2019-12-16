@@ -1,7 +1,9 @@
 export default class Save {
   highscore: SaveValue
+  tutorial: SaveValue
   constructor(storage: Storage) {
     this.highscore = new SaveValue(storage, 'com.auroratide.dampfire::highscore', '0')
+    this.tutorial = new SaveValue(storage, 'com.auroratide.dampfire::tutorial', '0')
   }
 }
 

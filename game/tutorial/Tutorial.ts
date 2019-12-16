@@ -23,19 +23,24 @@ export default class Tutorial extends PIXI.Container {
   show = (n: number, onFinish: () => void) => {
     this.campfire.pauseDimming()
     this.onFinish = onFinish
-    switch(n) {
-      case 1: return new Sequence(this, [
-        'Ugh, those bullies are trying to put out my fire again! With buckets of water, no less. (tap for next)',
-        'If I TAP the buckets, that should be enough to destroy them!'
-      ]).start()
-
-      case 2: return new Sequence(this, [
-        'My campfire is going out over time... Guess I need to add some wood!',
-        'To replenish the fire, I should allow wood logs to pass through by not tapping them.',
-        'However, I score more points the dimmer my fire is! Do I play it safe, or do I go hardcore?'
-      ]).start()
-
-      default: this.complete()
+    if(parseInt(this.save.tutorial.get()) < n) {
+      this.save.tutorial.set(n.toString())
+      switch(n) {
+        case 1: return new Sequence(this, [
+          'Ugh, those bullies are trying to put out my fire again! With buckets of water, no less. (tap for next)',
+          'If I TAP the buckets, that should be enough to destroy them!'
+        ]).start()
+  
+        case 2: return new Sequence(this, [
+          'My campfire is going out over time... Guess I need to add some wood!',
+          'To replenish the fire, I should allow wood logs to pass through by not tapping them.',
+          'However, I score more points the dimmer my fire is! Do I play it safe, or do I go hardcore?'
+        ]).start()
+  
+        default: this.complete()
+      }
+    } else {
+      this.complete()
     }
   }
 
