@@ -10,8 +10,11 @@ export default class Score {
 
   value = () => { return Math.round(this.score) }
 
-  add = (amount: number) => {
+  add = (amount: number): number => {
     const r = this.health.ratio()
-    this.score += amount * (2 * r * r - 5 * r + 4) // curve based on hp
+    const trueAmount = amount * (2 * r * r - 5 * r + 4) // curve based on hp
+    this.score += trueAmount
+
+    return trueAmount
   }
 }
