@@ -21,8 +21,10 @@
   },
   "dependencies": {
     "@types/pixi.js": "^5.0.0",
+    "@types/webfontloader": "^1.6.29",
     "pixi-sound": "^3.0.4",
     "pixi.js": "^5.2.0",
-    "serve": "^11.2.0"
+    "serve": "^11.2.0",
+    "webfontloader": "^1.6.28"
   }
 }
