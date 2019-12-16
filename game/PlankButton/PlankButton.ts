@@ -17,6 +17,10 @@ export default class PlankButton extends PIXI.Container {
     this.text = new PlainText(text)
     this.text.anchor.set(0.5, 0.55)
 
+    if(this.plank.width < this.text.width + 50) {
+      this.plank.width = this.text.width + 50
+    }
+
     this.addChild(this.plank)
     this.addChild(this.text)
 

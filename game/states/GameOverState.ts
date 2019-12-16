@@ -59,7 +59,7 @@ export default class GameOverState extends PIXI.Container implements State {
 
     const scoreText = new PlainText(`Score: ${score.value()}`, 22)
     positioning.centerX(scoreText)
-    positioning.y(scoreText, 200)
+    positioning.y(scoreText, 180)
     
     const playButton = new PlankButton('Play Again', this.resources, () => {
       this.stateManager.transitionTo('play')
@@ -71,7 +71,7 @@ export default class GameOverState extends PIXI.Container implements State {
       this.stateManager.transitionTo('menu')
     })
     positioning.centerX(mainMenuButton)
-    positioning.y(mainMenuButton, 300)
+    positioning.y(mainMenuButton, 325)
 
     this.addChild(text)
     this.addChild(scoreText)
